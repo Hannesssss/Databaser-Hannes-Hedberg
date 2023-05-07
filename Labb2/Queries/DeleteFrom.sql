@@ -1,0 +1,1 @@
+DELETE FROM HannesHedberg.dbo.Author
