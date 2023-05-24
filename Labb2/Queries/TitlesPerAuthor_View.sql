@@ -1,1 +1,1 @@
-SELECT * FROM TitlesPerAuthor
+SELECT * FROM TitlesPerAuthor;

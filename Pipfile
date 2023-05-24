@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 sqlalchemy = "*"
 pyobs = "*"
+pandas = "*"
+pyodbc = "*"
 
 [dev-packages]
 

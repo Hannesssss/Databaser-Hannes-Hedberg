@@ -234,9 +234,8 @@ Skapa en query som tar bort alla kvinnor födda före 1970 från ”NewUsers”.
 
 
 
-DELETE FROM NewUsers 
-WHERE Gender = 'Female' 
-AND DATEPART(YEAR, Birthdate) < 1970;
+DELETE FROM NewUsers
+WHERE Gender = 'Female' AND SUBSTRING(ID, 1, 2) < '70';
 
 GO									-- It just keeps on going!
 
@@ -339,19 +338,25 @@ tabellen company.regions
 
 
 SELECT
-	reg.RegionDescription AS Region,										-- Selects the region description and renames the column as 'Region'
-	COUNT(*) AS "Number of Employees"										-- Counts the number of employees in each region and renames the column as 'Number of Employees'
+    reg.RegionDescription AS Region,                        -- Selects the region description and renames the column as 'Region'
+    COUNT(DISTINCT emp.Id) AS "Number of Employees"        -- Counts the number of distinct employees in each region and renames the column as 'Number of Employees'
 FROM
-	company.employees emp													-- Specifies the employees table and assigns it an alias 'emp'
-	INNER JOIN company.employee_territory et ON emp.Id = et.EmployeeId		-- Joins the employees and employee_territory tables based on employee id
-	INNER JOIN company.territories terr ON et.TerritoryId = terr.Id			
-	INNER JOIN company.regions reg ON terr.RegionId = reg.Id				
+    company.employees emp                                  -- Specifies the employees table and assigns it an alias 'emp'
+    INNER JOIN company.employee_territory et               -- Joins the employee_territory table
+        ON emp.Id = et.EmployeeId
+    INNER JOIN company.territories terr                    -- Joins the territories table
+        ON et.TerritoryId = terr.Id
+    INNER JOIN company.regions reg                         -- Joins the regions table
+        ON terr.RegionId = reg.Id
 GROUP BY
-	RegionId,																-- Groups the result set by the region id & description
-	RegionDescription;														
+    reg.RegionDescription;                                 -- Groups the result set by the region description
 
 
-GO																			-- Join me in the last bit!
+GO
+
+                                            
+
+-- Join me in the last bit!
 
 
 /*
